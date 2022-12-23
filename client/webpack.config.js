@@ -17,8 +17,7 @@ module.exports = () => {
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html',
-        title: 'text editor',
+        template: './index.html'
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
@@ -27,13 +26,11 @@ module.exports = () => {
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: 'just another text editor',
+        name: 'just-another-text-editor',
         short_name: 'JATE',
         description: 'text editor called JATE',
-        background_color: '#66deca',
-        theme_color: '#66deca',
-        start_url: './',
-        publicPath: './',
+        start_url: '/',
+        publicPath: '/',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),

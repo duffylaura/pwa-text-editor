@@ -13,31 +13,36 @@ const initdb = async () =>
   });
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => {
-  try {
+// export const putDb = async (content) => {
+
+export const putDb = async (content)  => {
+    // Create a connection to the database database and version we want to use.
     const jateDb = await openDB('jate', 1);
-    const transactionJate = jateDb.transaction('jate', 'readwrite');
-    const jateObjectStore = transactionJate.objectStore('jate');
-    const putRequest = jateObjectStore.put({id: id, text: content});
-    const result = await putRequest; 
-    console.log('saved', result);
-  } catch {
-    console.error('not saved. putDb not implemented');
-  }
+    // Create a new transaction and specify the database and data privileges.
+    const tx = jateDb.transaction('jate', 'readwrite');
+    // Open up the desired object store.
+    const store = tx.objectStore('jate');
+    // Use the .put() method 
+    const request = store.put({ id: 1, content: content});
+    // Get confirmation of the request.
+    const result = await request;
+    console.log('🚀 - data saved to the database', result);
 };
 
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
-  try {
-    const jateDb = await openDB('jate', 1); 
-    const transactionJate = jateDb.transaction('jate', 'readonly'); 
-    const jateObjectStore = transactionJate.objectStore('jate');
-    const getAllRequest = jateObjectStore.getAll(); 
-    const result = await getAllRequest; 
-    return result?.value;
-  } catch {
-    console.error('error with getAll request. getDb not implemented');
-  }
-}
+  // Create a connection to the database database and version we want to use.
+  const jateDb = await openDB('jate', 1);
+  // Create a new transaction and specify the database and data privileges.
+  const tx = jateDb.transaction('jate', 'readonly');
+  // Open up the desired object store.
+  const store = tx.objectStore('jate');
+  // Use the .getAll() method to get all data in the database.
+  const request = store.getAll();
+  // Get confirmation of the request.
+  const result = await request;
+  console.log('result.value', result);
+  return result;
+};
 
 initdb();
